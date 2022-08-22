@@ -11,7 +11,7 @@
   "keywords": ["dumi","ui-lib"],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/huiergo/cz-ui.git"
+    "url": "git+https://github.com/huiergo/lib-04.git"
   },
   "publishConfig": {
     "access": "public",
