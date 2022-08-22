@@ -1,7 +1,12 @@
 {
   "private": true,
   "name": "lib-04",
+  "description": "这是一个测试 组件库 lib04",
+  "author": "ding",
   "version": "1.0.0",
+  "homepage": "https://github.com/huiergo/lib-04",
+
+  "keywords": ["dumi","ui-lib"],
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
