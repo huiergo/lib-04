@@ -4,8 +4,19 @@
   "author": "ding",
   "version": "1.0.0",
   "homepage": "https://github.com/huiergo/lib-04",
-
+  "contributors":[{
+    "name": "huiergo",
+    "email": "1063229610@qq.com"
+  }],
   "keywords": ["dumi","ui-lib"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huiergo/cz-ui.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
