@@ -4,11 +4,16 @@
   "author": "ding",
   "version": "1.0.0",
   "homepage": "https://github.com/huiergo/lib-04",
-  "contributors":[{
-    "name": "huiergo",
-    "email": "1063229610@qq.com"
-  }],
-  "keywords": ["dumi","ui-lib"],
+  "contributors": [
+    {
+      "name": "huiergo",
+      "email": "1063229610@qq.com"
+    }
+  ],
+  "keywords": [
+    "dumi",
+    "ui-lib"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/huiergo/lib-04.git"
@@ -45,6 +50,7 @@
     ]
   },
   "dependencies": {
+    "babel-plugin-import": "^1.13.5",
     "dumi-theme-mobile": "^1.1.24",
     "react": "^18.0.0"
   },
