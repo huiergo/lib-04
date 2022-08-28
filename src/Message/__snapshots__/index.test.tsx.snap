@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Message /> should render alert with type 1`] = `
+<div
+  class="__lib-04__message"
+>
+  info
+  <div
+    class="__lib-04__message-text"
+  >
+    自定义的主题色配置为：
+  </div>
+  <div>
+    Global theme color 
+    red
+  </div>
+</div>
+`;
+
+exports[`<Message /> should render alert with type 2`] = `
+<div
+  class="__lib-04__message"
+>
+  warning
+  <div
+    class="__lib-04__message-text"
+  >
+    自定义的主题色配置为：
+  </div>
+  <div>
+    Global theme color 
+    red
+  </div>
+</div>
+`;
+
+exports[`<Message /> should render alert with type 3`] = `
+<div
+  class="__lib-04__message"
+>
+  positive
+  <div
+    class="__lib-04__message-text"
+  >
+    自定义的主题色配置为：
+  </div>
+  <div>
+    Global theme color 
+    red
+  </div>
+</div>
+`;
+
+exports[`<Message /> should render alert with type 4`] = `
+<div
+  class="__lib-04__message"
+>
+  negative
+  <div
+    class="__lib-04__message-text"
+  >
+    自定义的主题色配置为：
+  </div>
+  <div>
+    Global theme color 
+    red
+  </div>
+</div>
+`;
+
+exports[`<Message /> should render default 1`] = `
+<div>
+  <div
+    class="__lib-04__message"
+  >
+    default
+    <div
+      class="__lib-04__message-text"
+    >
+      自定义的主题色配置为：
+    </div>
+    <div>
+      Global theme color 
+      red
+    </div>
+  </div>
+</div>
+`;

@@ -29,7 +29,7 @@ function Button2(props: ButtonProps) {
     <div
       className={
         // `btn btn_default ${className}`
-        cs(prefix, {
+        cs(prefix, 'test', {
           [`${prefix}_disabled`]: disabled,
           [`${prefix}_highlight`]: type == 'highlight',
           [`${prefix}_default`]: type == 'default',

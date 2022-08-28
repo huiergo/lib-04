@@ -13,6 +13,10 @@ describe('Button', () => {
     const wrapper = render(<Button>foo</Button>);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
+  it('disabled', () => {
+    const wrapper = render(<Button disabled>foo</Button>);
+    expect(toJson(wrapper)).toMatchSnapshot();
+  });
 
   // it('icon', () => {
   //   const wrapper = render(
@@ -26,24 +30,24 @@ describe('Button', () => {
   //   expect(toJson(wrapper)).toMatchSnapshot();
   // });
 
-  // it('onClick', () => {
-  //   // const onClick = jest.fn();
-  //   const onclick=()=>console.log('diaoyognle')
-  //   const wrapper = shallow(<Button onClick={onclick}>foo</Button>);
-  //   wrapper.simulate('click');
-  //   expect(onclick).toBeCalled();
-  // });
+  it('onClick', () => {
+    // const onClick = jest.fn();
+    const onclick = () => console.log('diaoyognle');
+    const wrapper = shallow(<Button onClick={onclick}>foo</Button>);
+    wrapper.simulate('click');
+    expect(onclick).toBeCalled();
+  });
 
-  // it('onClick when disabled', () => {
-  //   const onClick = jest.fn();
-  //   const wrapper = shallow(
-  //     <Button disabled onClick={onClick}>
-  //       foo
-  //     </Button>,
-  //   );
-  //   wrapper.simulate('click');
-  //   expect(onClick).not.toBeCalled();
-  // });
+  it('onClick when disabled', () => {
+    const onClick = jest.fn();
+    const wrapper = shallow(
+      <Button disabled onClick={onClick}>
+        foo
+      </Button>,
+    );
+    wrapper.simulate('click');
+    expect(onClick).not.toBeCalled();
+  });
 
   // it('onTouchStart in NativeButton', () => {
   //   const wrapper = shallow(<Button>foo</Button>);

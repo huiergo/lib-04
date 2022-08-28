@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button disabled 1`] = `
+<div
+  class="btn test btn_disabled"
+>
+  foo
+</div>
+`;
+
+exports[`Button renders correctly 1`] = `
+<div
+  class="btn"
+>
+  foo
+</div>
+`;
