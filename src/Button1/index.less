@@ -1,0 +1,48 @@
+@import '../style/variables.less';
+@import './common.less';
+
+@theme: default;
+// The prefix to use on all css classes from ant.
+@ant-prefix: 'lib-04';
+
+@btn-prefix-cls: ~'@{ant-prefix}-btn';
+
+.@{btn-prefix-cls} {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 15px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.2s linear;
+
+  &_primary {
+    color: @lib-04-text-color;
+    background: @primary-color;
+  }
+
+  &_loading {
+    color: @lib-04-text-color;
+    background-color: fade(@primary-color, 50%);
+  }
+
+  &_disabled {
+    color: @lib-04-text-color;
+    background-color: fade(@primary-color, 30%);
+  }
+
+  &[disabled] {
+    color: #00000040;
+    background: #f5f5f5;
+  }
+
+  &_secondary {
+    color: #fff;
+    background-color: #dc004e;
+  }
+  .@{btn-prefix-cls}-loading > .anticon {
+    margin-right: 12px;
+  }
+}

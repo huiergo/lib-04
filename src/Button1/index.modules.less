@@ -1,0 +1,143 @@
+@import './common.less';
+
+@lib-04-button-white-color: #ffffff;
+@lib-04-button-black-color: #000000;
+
+.concis-button,
+.concis-dark-button {
+  display: inline-block;
+  .loading {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  &-primary,
+  &-danger,
+  &-info,
+  &-warning,
+  &-disabled,
+  &-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    opacity: var(--isDisabled);
+    transition: 0.2s linear;
+  }
+  &-primary,
+  &-danger,
+  &-info,
+  &-warning {
+    &:hover:not(.disabled, .loading) {
+      opacity: 0.7;
+    }
+    &:active:not(.disabled, .loading) {
+      opacity: 1;
+      transition: 0.1s;
+    }
+  }
+  &-primary {
+    color: @lib-04-button-white-color;
+    background-color: @lib-04-primary-color;
+  }
+  &-danger {
+    color: @lib-04-button-white-color;
+    background-color: @lib-04-danger-color;
+  }
+  &-info {
+    color: @lib-04-button-white-color;
+    background-color: @lib-04-info-color;
+  }
+  &-warning {
+    color: @lib-04-button-white-color;
+    background-color: @lib-04-warning-color;
+  }
+  &-disabled {
+    color: @lib-04-button-white-color;
+    background-color: @lib-04-disabled-color;
+    opacity: 0.7;
+  }
+  &-text {
+    color: @lib-04-button-black-color;
+    background-color: @lib-04-text-color;
+    border: 1px solid #ccc;
+    &:hover:not(.disabled, .loading) {
+      color: @lib-04-primary-color;
+      border-color: @lib-04-primary-color !important;
+      .concis-button-loading {
+        border-color: transparent @lib-04-primary-color @lib-04-primary-color;
+      }
+    }
+    &:active:not(.disabled, .loading) {
+      background-color: rgb(223, 223, 223);
+      transition: 0.1s;
+    }
+  }
+  .button-icon {
+    margin-right: var(--right-transform);
+  }
+  &-loading {
+    width: @lib-04-font-xs;
+    height: @lib-04-font-xs;
+    margin-right: 10px;
+    color: red;
+    border: 2px solid var(--loading-icon-color);
+    border-color: transparent var(--loading-icon-color) var(--loading-icon-color);
+    border-radius: @lib-04-radius-lg;
+    cursor: alias;
+    animation: 1s concis-button-loading infinite linear;
+  }
+  @keyframes concis-button-loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(100deg);
+    }
+    75% {
+      transform: rotate(200deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
+.concis-button-group,
+.concis-dark-button-group {
+  display: flex;
+  .concis-button,
+  .concis-dark-button {
+    &:last-of-type {
+      border-right: none;
+    }
+    border-right: 1px solid #a6a6a6;
+    &-primary,
+    &-danger,
+    &-info,
+    &-warning,
+    &-disabled,
+    &-text {
+      border-radius: 0px;
+    }
+  }
+}
+
+.concis-dark-button {
+  .concis-button-primary {
+    background-color: @lib-04-dark-primary-color;
+  }
+  .concis-button-danger {
+    background-color: @lib-04-dark-danger-color;
+  }
+  .concis-button-info {
+    background-color: @lib-04-dark-info-color;
+  }
+  .concis-button-warning {
+    background-color: @lib-04-dark-warning-color;
+  }
+  .concis-button-disabled {
+    background-color: @lib-04-dark-disabled-color;
+  }
+}

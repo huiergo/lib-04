@@ -1,0 +1,975 @@
+// mixins for button
+// ------------------------
+.button-size(@height; @padding-horizontal; @font-size; @border-radius) {
+  @padding-vertical: max(
+    (round(((@height - @font-size * @line-height-base) / 2) * 10) / 10) - @border-width-base,
+    0
+  );
+  height: @height;
+  padding: @padding-vertical @padding-horizontal;
+  font-size: @font-size;
+  border-radius: @border-radius;
+}
+
+.button-color(@color; @background; @border) {
+  color: @color;
+  border-color: @border; // a inside Button which only work in Chrome
+  & when not(@background = null) {
+    background: @background;
+  }
+  // http://stackoverflow.com/a/17253457
+  > a:only-child {
+    color: currentcolor;
+
+    &::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: transparent;
+      content: '';
+    }
+  }
+}
+
+.button-disabled(@color: @btn-disable-color; @background: @btn-disable-bg; @border: @btn-disable-border) {
+  &[disabled] {
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      .button-color(@color; @background; @border);
+
+      text-shadow: none;
+      box-shadow: none;
+    }
+  }
+}
+
+.button-variant-primary(@color; @background; @backgroundHover: yellow; @backgroundActive: yellow) {
+  .button-color(@color; @background; @background);
+
+  text-shadow: @btn-text-shadow;
+  box-shadow: @btn-primary-shadow;
+
+  &:hover,
+  &:focus {
+    & when (@theme = dark) {
+      .button-color(
+          @color; ~`colorPalette('@{background}', 7) `; ~`colorPalette('@{background}', 7) `
+        );
+    }
+    & when (not (@theme = dark) and not (@theme = variable)) {
+      .button-color(
+          @color; ~`colorPalette('@{background}', 5) `; ~`colorPalette('@{background}', 5) `
+        );
+    }
+    & when (@theme = variable) {
+      .button-color(@color; @backgroundHover; @backgroundHover);
+    }
+  }
+
+  &:active {
+    & when (@theme = dark) {
+      .button-color(
+          @color; ~`colorPalette('@{background}', 5) `; ~`colorPalette('@{background}', 5) `
+        );
+    }
+    & when (not (@theme = dark) and not (@theme = variable)) {
+      .button-color(
+          @color; ~`colorPalette('@{background}', 7) `; ~`colorPalette('@{background}', 7) `
+        );
+    }
+    & when (@theme = variable) {
+      .button-color(@color; @backgroundActive; @backgroundActive);
+    }
+  }
+
+  .button-disabled();
+}
+
+.button-variant-other(@color; @background; @border) {
+  .button-color(@color; @background; @border);
+
+  &:hover,
+  &:focus {
+    & when (@theme = dark) {
+      .button-color(@primary-5; @background; @primary-5);
+    }
+    & when (not (@theme = dark) and not (@theme = variable)) {
+      .button-color(
+          ~`colorPalette('@{btn-primary-bg}', 5) `; @background;
+            ~`colorPalette('@{btn-primary-bg}', 5) `
+        );
+    }
+    & when (@theme = variable) {
+      .button-color(@primary-color-hover; @background; @primary-color-hover);
+    }
+  }
+
+  &:active {
+    & when (@theme = dark) {
+      .button-color(@primary-7; @background; @primary-7);
+    }
+    & when (not (@theme = dark) and not (@theme = variable)) {
+      .button-color(
+          ~`colorPalette('@{btn-primary-bg}', 7) `; @background;
+            ~`colorPalette('@{btn-primary-bg}', 7) `
+        );
+    }
+    & when (@theme = variable) {
+      .button-color(@primary-color-active; @background; @primary-color-active);
+    }
+  }
+  .button-disabled();
+}
+
+.button-variant-ghost(@color; @border; @borderHover: yellow; @borderActive: yellow) {
+  .button-color(@color; null; @border);
+  text-shadow: none;
+
+  &:hover,
+  &:focus {
+    & when (@border = transparent) {
+      & when (@theme = dark) {
+        .button-color(~`colorPalette('@{color}', 7) `; null; transparent);
+      }
+      & when (not (@theme = dark) and not (@theme = variable)) {
+        .button-color(~`colorPalette('@{color}', 5) `; null; transparent);
+      }
+      & when (@theme = variable) {
+        .button-color(@borderActive; transparent; transparent);
+      }
+    }
+    & when not (@border = transparent) {
+      & when (@theme = dark) {
+        .button-color(
+            ~`colorPalette('@{color}', 7) `; null; ~`colorPalette('@{color}', 7) `
+          );
+      }
+      & when (not (@theme = dark) and not (@theme = variable)) {
+        .button-color(
+            ~`colorPalette('@{color}', 5) `; null; ~`colorPalette('@{color}', 5) `
+          );
+      }
+      & when (@theme = variable) {
+        .button-color(@borderHover; transparent; @borderHover);
+      }
+    }
+  }
+
+  &:active {
+    & when (@border = transparent) {
+      & when (@theme = dark) {
+        .button-color(~`colorPalette('@{color}', 5) `; null; transparent);
+      }
+      & when (not (@theme = dark) and not (@theme = variable)) {
+        .button-color(~`colorPalette('@{color}', 7) `; null; transparent);
+      }
+      & when (@theme = variable) {
+        .button-color(@borderActive; transparent; transparent);
+      }
+    }
+    & when not (@border = transparent) {
+      & when (@theme = dark) {
+        .button-color(
+            ~`colorPalette('@{color}', 5) `; null; ~`colorPalette('@{color}', 5) `
+          );
+      }
+      & when (not (@theme = dark) and not (@theme = variable)) {
+        .button-color(
+            ~`colorPalette('@{color}', 7) `; null; ~`colorPalette('@{color}', 7) `
+          );
+      }
+      & when (@theme = variable) {
+        .button-color(@borderActive; transparent; @borderActive);
+      }
+    }
+  }
+  .button-disabled();
+}
+
+.button-group-base(@btnClassName) {
+  position: relative;
+  display: inline-flex;
+  > .@{btnClassName},
+  > span > .@{btnClassName} {
+    position: relative;
+
+    &:hover,
+    &:focus,
+    &:active {
+      z-index: 2;
+    }
+
+    &[disabled] {
+      z-index: 0;
+    }
+  }
+  .@{btnClassName}-icon-only {
+    font-size: @font-size-base;
+  }
+}
+// Base styles of buttons
+// --------------------------------------------------
+.btn() {
+  position: relative;
+  display: inline-block;
+  font-weight: @btn-font-weight;
+  white-space: nowrap;
+  text-align: center;
+  background-image: none;
+  border: @btn-border-width @btn-border-style transparent;
+  box-shadow: @btn-shadow;
+  cursor: pointer;
+  transition: all 0.3s @ease-in-out;
+  user-select: none;
+  touch-action: manipulation;
+  .button-size(
+      @btn-height-base; @btn-padding-horizontal-base; @font-size-base; @btn-border-radius-base
+    );
+  > .@{iconfont-css-prefix} {
+    line-height: 1;
+  }
+
+  &,
+  &:active,
+  &:focus {
+    outline: 0;
+  }
+
+  &:not([disabled]):hover {
+    text-decoration: none;
+  }
+
+  &:not([disabled]):active {
+    outline: 0;
+    box-shadow: none;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+
+    > * {
+      pointer-events: none;
+    }
+  }
+
+  &-lg {
+    .button-size(
+        @btn-height-lg; @btn-padding-horizontal-lg; @btn-font-size-lg; @btn-border-radius-base
+      );
+  }
+
+  &-sm {
+    .button-size(
+        @btn-height-sm; @btn-padding-horizontal-sm; @btn-font-size-sm; @btn-border-radius-sm
+      );
+  }
+}
+// primary button style
+.btn-primary() {
+  .button-variant-primary(@btn-primary-color; @btn-primary-bg; @primary-color-hover; @primary-color-active);
+}
+// default button style
+.btn-default() {
+  .button-variant-other(@btn-default-color; @btn-default-bg; @btn-default-border; );
+
+  &:hover,
+  &:focus,
+  &:active {
+    text-decoration: none;
+    background: @btn-default-bg;
+  }
+}
+// ghost button style
+.btn-ghost() {
+  .button-variant-other(@btn-ghost-color, @btn-ghost-bg, @btn-ghost-border);
+}
+// dashed button style
+.btn-dashed() {
+  .button-variant-other(@btn-default-color, @btn-default-bg, @btn-default-border);
+  border-style: dashed;
+}
+// danger button style
+.btn-danger() {
+  .button-variant-primary(@btn-danger-color, @btn-danger-bg, @error-color-hover, @error-color-active);
+}
+// danger default button style
+.btn-danger-default() {
+  .button-color(@error-color, @btn-default-bg, @error-color);
+
+  &:hover,
+  &:focus {
+    & when (@theme = dark) {
+      .button-color(
+          ~`colorPalette('@{error-color}', 7) `; @btn-default-bg; ~`colorPalette('@{error-color}', 7)
+            `
+        );
+    }
+    & when (not (@theme = dark) and not (@theme = variable)) {
+      .button-color(
+          ~`colorPalette('@{error-color}', 5) `; @btn-default-bg; ~`colorPalette('@{error-color}', 5)
+            `
+        );
+    }
+    & when (@theme = variable) {
+      .button-color(@error-color-hover, @btn-default-bg, @error-color-hover);
+    }
+  }
+
+  &:active {
+    & when (@theme = dark) {
+      .button-color(
+          ~`colorPalette('@{error-color}', 5) `; @btn-default-bg; ~`colorPalette('@{error-color}', 5)
+            `
+        );
+    }
+    & when (not (@theme = dark) and not (@theme = variable)) {
+      .button-color(
+          ~`colorPalette('@{error-color}', 7) `; @btn-default-bg; ~`colorPalette('@{error-color}', 7)
+            `
+        );
+    }
+    & when (@theme = variable) {
+      .button-color(@error-color-active, @btn-default-bg, @error-color-active);
+    }
+  }
+  .button-disabled();
+}
+// danger link button style
+.btn-danger-link() {
+  .button-variant-other(@error-color, transparent, transparent);
+  box-shadow: none;
+
+  &:hover,
+  &:focus {
+    & when (@theme = dark) {
+      .button-color(~`colorPalette('@{error-color}', 7) `; transparent; transparent);
+    }
+    & when (not (@theme = dark) and not (@theme = variable)) {
+      .button-color(~`colorPalette('@{error-color}', 5) `; transparent; transparent);
+    }
+    & when (@theme = variable) {
+      .button-color(@error-color-hover; transparent; transparent);
+    }
+  }
+
+  &:active {
+    & when (@theme = dark) {
+      .button-color(~`colorPalette('@{error-color}', 5) `; transparent; transparent);
+    }
+    & when (not (@theme = dark) and not (@theme = variable)) {
+      .button-color(~`colorPalette('@{error-color}', 7) `; transparent; transparent);
+    }
+    & when (@theme = variable) {
+      .button-color(@error-color-active; transparent; transparent);
+    }
+  }
+  .button-disabled(@disabled-color; transparent; transparent);
+}
+// link button style
+.btn-link() {
+  .button-variant-other(@link-color, transparent, transparent);
+  box-shadow: none;
+
+  &:hover {
+    background: @btn-link-hover-bg;
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    border-color: transparent;
+  }
+  .button-disabled(@disabled-color; transparent; transparent);
+}
+// link button disabled style
+.btn-href-disabled() {
+  cursor: not-allowed;
+
+  > * {
+    pointer-events: none;
+  }
+
+  &,
+  &:hover,
+  &:focus,
+  &:active {
+    .button-color(@btn-disable-color,transparent, transparent);
+
+    text-shadow: none;
+    box-shadow: none;
+  }
+}
+// text button style
+.btn-text() {
+  .button-variant-other(@text-color, transparent, transparent);
+  box-shadow: none;
+
+  &:hover,
+  &:focus {
+    color: @text-color;
+    background: @btn-text-hover-bg;
+    border-color: transparent;
+  }
+
+  &:active {
+    color: @text-color;
+    background: fadein(@btn-text-hover-bg, 1%);
+    border-color: transparent;
+  }
+
+  .button-disabled(@disabled-color; transparent; transparent);
+}
+.btn-danger-text() {
+  .button-variant-other(@error-color, transparent, transparent);
+  box-shadow: none;
+
+  &:hover,
+  &:focus {
+    & when (@theme = dark) {
+      .button-color(~`colorPalette('@{error-color}', 7) `; @btn-text-hover-bg; transparent);
+    }
+    & when (not (@theme = dark) and not (@theme = variable)) {
+      .button-color(~`colorPalette('@{error-color}', 5) `; @btn-text-hover-bg; transparent);
+    }
+    & when (@theme = variable) {
+      .button-color(@error-color-hover; @btn-text-hover-bg; transparent);
+    }
+  }
+
+  &:active {
+    & when (@theme = dark) {
+      .button-color(~`colorPalette('@{error-color}', 5) `; fadein(@btn-text-hover-bg, 1%); transparent);
+    }
+    & when (not (@theme = dark) and not (@theme = variable)) {
+      .button-color(~`colorPalette('@{error-color}', 7) `; fadein(@btn-text-hover-bg, 1%); transparent);
+    }
+    & when (@theme = variable) {
+      .button-color(@error-color-active; fadein(@btn-text-hover-bg, 1%); transparent);
+    }
+  }
+  .button-disabled(@disabled-color; transparent; transparent);
+}
+// round button
+.btn-round(@btnClassName: btn) {
+  .button-size(@btn-circle-size; (@btn-circle-size / 2); @font-size-base; @btn-circle-size);
+  &.@{btnClassName}-lg {
+    .button-size(
+        @btn-circle-size-lg; (@btn-circle-size-lg / 2); @btn-font-size-lg; @btn-circle-size-lg
+      );
+  }
+  &.@{btnClassName}-sm {
+    .button-size(
+        @btn-circle-size-sm; (@btn-circle-size-sm / 2); @font-size-base; @btn-circle-size-sm
+      );
+  }
+}
+// square button: the content only contains icon
+.btn-square(@btnClassName: btn) {
+  .square(@btn-square-size);
+  .button-size(@btn-square-size; 0; @btn-square-only-icon-size; @btn-border-radius-base);
+
+  & > * {
+    font-size: @btn-square-only-icon-size;
+  }
+  &.@{btnClassName}-lg {
+    .square(@btn-square-size-lg);
+    .button-size(@btn-square-size-lg; 0; @btn-square-only-icon-size-lg; @btn-border-radius-base);
+
+    & > * {
+      font-size: @btn-square-only-icon-size-lg;
+    }
+  }
+  &.@{btnClassName}-sm {
+    .square(@btn-square-size-sm);
+    .button-size(@btn-square-size-sm; 0; @btn-square-only-icon-size-sm; @btn-border-radius-base);
+
+    & > * {
+      font-size: @btn-square-only-icon-size-sm;
+    }
+  }
+}
+// circle button: the content only contains icon
+.btn-circle(@btnClassName: btn) {
+  min-width: @btn-height-base;
+  padding-right: 0;
+  padding-left: 0;
+  text-align: center;
+  border-radius: 50%;
+  &.@{btnClassName}-lg {
+    min-width: @btn-height-lg;
+    border-radius: 50%;
+  }
+  &.@{btnClassName}-sm {
+    min-width: @btn-height-sm;
+    border-radius: 50%;
+  }
+}
+// Horizontal button groups style
+// --------------------------------------------------
+.btn-group(@btnClassName: btn) {
+  .button-group-base(@btnClassName);
+  .@{btnClassName} + .@{btnClassName},
+  .@{btnClassName} + &,
+  span + .@{btnClassName},
+  .@{btnClassName} + span,
+  > span + span,
+  & + .@{btnClassName},
+  & + & {
+    margin-left: -1px;
+  }
+  .@{btnClassName}-primary + .@{btnClassName}:not(.@{btnClassName}-primary):not([disabled]) {
+    border-left-color: transparent;
+  }
+  .@{btnClassName} {
+    border-radius: 0;
+  }
+  > .@{btnClassName}:first-child,
+  > span:first-child > .@{btnClassName} {
+    margin-left: 0;
+  }
+  > .@{btnClassName}:only-child {
+    border-radius: @btn-border-radius-base;
+  }
+  > span:only-child > .@{btnClassName} {
+    border-radius: @btn-border-radius-base;
+  }
+  > .@{btnClassName}:first-child:not(:last-child),
+  > span:first-child:not(:last-child) > .@{btnClassName} {
+    border-top-left-radius: @btn-border-radius-base;
+    border-bottom-left-radius: @btn-border-radius-base;
+  }
+  > .@{btnClassName}:last-child:not(:first-child),
+  > span:last-child:not(:first-child) > .@{btnClassName} {
+    border-top-right-radius: @btn-border-radius-base;
+    border-bottom-right-radius: @btn-border-radius-base;
+  }
+
+  &-sm {
+    > .@{btnClassName}:only-child {
+      border-radius: @btn-border-radius-sm;
+    }
+    > span:only-child > .@{btnClassName} {
+      border-radius: @btn-border-radius-sm;
+    }
+    > .@{btnClassName}:first-child:not(:last-child),
+    > span:first-child:not(:last-child) > .@{btnClassName} {
+      border-top-left-radius: @btn-border-radius-sm;
+      border-bottom-left-radius: @btn-border-radius-sm;
+    }
+    > .@{btnClassName}:last-child:not(:first-child),
+    > span:last-child:not(:first-child) > .@{btnClassName} {
+      border-top-right-radius: @btn-border-radius-sm;
+      border-bottom-right-radius: @btn-border-radius-sm;
+    }
+  }
+
+  & > & {
+    float: left;
+  }
+  & > &:not(:first-child):not(:last-child) > .@{btnClassName} {
+    border-radius: 0;
+  }
+
+  & > &:first-child:not(:last-child) {
+    > .@{btnClassName}:last-child {
+      padding-right: 8px;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+  & > &:last-child:not(:first-child) > .@{btnClassName}:first-child {
+    padding-left: 8px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+//   =============
+@import '../../style/themes/index';
+@import '../../style/mixins/index';
+@import './mixin';
+
+@btn-prefix-cls: ~'@{ant-prefix}-btn';
+
+// for compatible
+@btn-ghost-color: @text-color;
+@btn-ghost-bg: transparent;
+@btn-ghost-border: @border-color-base;
+
+// Button styles
+// -----------------------------
+.@{btn-prefix-cls} {
+  // Fixing https://github.com/ant-design/ant-design/issues/12978
+  // Fixing https://github.com/ant-design/ant-design/issues/20058
+  // Fixing https://github.com/ant-design/ant-design/issues/19972
+  // Fixing https://github.com/ant-design/ant-design/issues/18107
+  // Fixing https://github.com/ant-design/ant-design/issues/13214
+  // It is a render problem of chrome, which is only happened in the codesandbox demo
+  // 0.001px solution works and I don't know why
+  line-height: @btn-line-height;
+  .btn();
+  .btn-default();
+
+  // Fix loading button animation
+  // https://github.com/ant-design/ant-design/issues/24323
+  > span {
+    display: inline-block;
+  }
+
+  &-primary {
+    .btn-primary();
+
+    .@{btn-prefix-cls}-group &:not(:first-child):not(:last-child) {
+      border-right-color: @btn-group-border;
+      border-left-color: @btn-group-border;
+
+      &:disabled {
+        border-color: @btn-default-border;
+      }
+    }
+
+    .@{btn-prefix-cls}-group &:first-child {
+      &:not(:last-child) {
+        border-right-color: @btn-group-border;
+
+        &[disabled] {
+          border-right-color: @btn-default-border;
+        }
+      }
+    }
+
+    .@{btn-prefix-cls}-group &:last-child:not(:first-child),
+    .@{btn-prefix-cls}-group & + & {
+      border-left-color: @btn-group-border;
+
+      &[disabled] {
+        border-left-color: @btn-default-border;
+      }
+    }
+  }
+
+  &-ghost {
+    .btn-ghost();
+  }
+
+  &-dashed {
+    .btn-dashed();
+  }
+
+  // type="danger" will deprecated
+  // use danger instead
+  &-danger {
+    .btn-danger();
+  }
+
+  &-link {
+    .btn-link();
+  }
+
+  &-text {
+    .btn-text();
+  }
+
+  &-dangerous {
+    .btn-danger-default();
+  }
+
+  &-dangerous&-primary {
+    .btn-danger();
+  }
+
+  &-dangerous&-link {
+    .btn-danger-link();
+  }
+
+  &-dangerous&-text {
+    .btn-danger-text();
+  }
+
+  &-icon-only {
+    .btn-square(@btn-prefix-cls);
+    vertical-align: -3px;
+
+    > .@{iconfont-css-prefix} {
+      display: flex;
+      justify-content: center;
+    }
+
+    .@{iconfont-css-prefix}-loading {
+      padding: 0 !important;
+    }
+  }
+
+  // https://github.com/ant-design/ant-design/issues/32365
+  a&-icon-only {
+    vertical-align: -1px;
+
+    > .@{iconfont-css-prefix} {
+      display: inline;
+    }
+  }
+
+  &-round {
+    .btn-round(@btn-prefix-cls);
+    &.@{btn-prefix-cls}-icon-only {
+      width: auto;
+    }
+  }
+
+  &-circle {
+    .btn-circle(@btn-prefix-cls);
+  }
+
+  &::before {
+    position: absolute;
+    top: -@btn-border-width;
+    right: -@btn-border-width;
+    bottom: -@btn-border-width;
+    left: -@btn-border-width;
+    z-index: 1;
+    display: none;
+    background: @component-background;
+    border-radius: inherit;
+    opacity: 0.35;
+    transition: opacity 0.2s;
+    content: '';
+    pointer-events: none;
+  }
+
+  .@{iconfont-css-prefix} {
+    transition: margin-left 0.3s @ease-in-out;
+
+    // Follow icon blur under windows. Change the render.
+    // https://github.com/ant-design/ant-design/issues/13924
+    &.@{iconfont-css-prefix}-plus,
+    &.@{iconfont-css-prefix}-minus {
+      > svg {
+        shape-rendering: optimizespeed;
+      }
+    }
+  }
+
+  &&-loading {
+    position: relative;
+    cursor: default;
+
+    &::before {
+      display: block;
+    }
+  }
+
+  & > &-loading-icon {
+    transition: width 0.3s @ease-in-out, opacity 0.3s @ease-in-out;
+
+    .@{iconfont-css-prefix} {
+      padding-right: @padding-xs;
+      animation: none;
+      // for smooth button padding transition
+      svg {
+        animation: loadingCircle 1s infinite linear;
+      }
+    }
+  }
+
+  &-group {
+    .btn-group(@btn-prefix-cls);
+  }
+
+  // http://stackoverflow.com/a/21281554/3040605
+  &:focus > span,
+  &:active > span {
+    position: relative;
+  }
+
+  // To ensure that a space will be placed between character and `Icon`.
+  > .@{iconfont-css-prefix} + span,
+  > span + .@{iconfont-css-prefix} {
+    margin-left: @margin-xs;
+  }
+
+  &&-background-ghost {
+    color: @btn-default-ghost-color;
+    border-color: @btn-default-ghost-border;
+
+    &,
+    &:hover,
+    &:active,
+    &:focus {
+      background: @btn-default-ghost-bg;
+    }
+
+    &:hover,
+    &:focus {
+      color: @primary-color-hover;
+      border-color: @primary-color-hover;
+    }
+
+    &:active {
+      color: @primary-color-active;
+      border-color: @primary-color-active;
+    }
+
+    &[disabled] {
+      color: @disabled-color;
+      background: @btn-default-ghost-bg;
+      border-color: @btn-default-border;
+    }
+  }
+
+  &-background-ghost&-primary {
+    .button-variant-ghost(@btn-primary-bg, @btn-primary-bg, @primary-color-hover, @primary-color-active);
+  }
+
+  &-background-ghost&-danger {
+    .button-variant-ghost(@btn-danger-border, @btn-danger-border, @error-color-hover, @error-color-active);
+  }
+
+  &-background-ghost&-dangerous {
+    .button-variant-ghost(@btn-danger-border, @btn-danger-border, @error-color-hover, @error-color-active);
+  }
+
+  &-background-ghost&-dangerous&-link {
+    .button-variant-ghost(@btn-danger-border, transparent, @error-color-hover, @error-color-active);
+  }
+
+  &-two-chinese-chars::first-letter {
+    letter-spacing: 0.34em;
+  }
+
+  &-two-chinese-chars > *:not(.@{iconfont-css-prefix}) {
+    margin-right: -0.34em;
+    letter-spacing: 0.34em;
+  }
+
+  &&-block {
+    width: 100%;
+  }
+
+  // https://github.com/ant-design/ant-design/issues/12681
+  // same method as Select
+  &:empty {
+    display: inline-block;
+    width: 0;
+    visibility: hidden;
+    content: '\a0';
+  }
+}
+
+a.@{btn-prefix-cls} {
+  // Fixing https://github.com/ant-design/ant-design/issues/12978
+  // https://github.com/ant-design/ant-design/issues/29978
+  // It is a render problem of chrome, which is only happened in the codesandbox demo
+  // 0.1px for padding-top solution works and I don't why
+  padding-top: 0.01px !important;
+  line-height: @btn-height-base - 2px;
+
+  &-disabled {
+    .btn-href-disabled();
+  }
+
+  &-lg {
+    line-height: @btn-height-lg - 2px;
+  }
+
+  &-sm {
+    line-height: @btn-height-sm - 2px;
+  }
+}
+
+@import './rtl';
+
+// ========
+
+.@{btn-prefix-cls} {
+  &-rtl {
+    direction: rtl;
+  }
+
+  &-primary {
+    .@{btn-prefix-cls}-group &:last-child:not(:first-child),
+    .@{btn-prefix-cls}-group & + & {
+      .@{btn-prefix-cls}-group-rtl& {
+        border-right-color: @btn-group-border;
+        border-left-color: @btn-default-border;
+      }
+
+      &[disabled] {
+        .@{btn-prefix-cls}-group-rtl& {
+          border-right-color: @btn-default-border;
+          border-left-color: @btn-group-border;
+        }
+      }
+    }
+  }
+
+  & > &-loading-icon {
+    .@{iconfont-css-prefix} {
+      .@{btn-prefix-cls}-rtl& {
+        padding-right: 0;
+        padding-left: @margin-xs;
+      }
+    }
+  }
+
+  > .@{iconfont-css-prefix} + span,
+  > span + .@{iconfont-css-prefix} {
+    .@{btn-prefix-cls}-rtl& {
+      margin-right: 8px;
+      margin-left: 0;
+    }
+  }
+}
+
+// mixin
+.btn-group(@btnClassName: btn) {
+  .@{btnClassName} + .@{btnClassName},
+  .@{btnClassName} + &,
+  span + .@{btnClassName},
+  .@{btnClassName} + span,
+  > span + span,
+  & + .@{btnClassName},
+  & + & {
+    .@{btnClassName}-rtl&,
+    .@{btnClassName}-group-rtl& {
+      margin-right: -1px;
+      margin-left: auto;
+    }
+  }
+
+  &.@{btnClassName}-group-rtl {
+    direction: rtl;
+  }
+
+  > .@{btnClassName}:first-child:not(:last-child),
+  > span:first-child:not(:last-child) > .@{btnClassName} {
+    .@{btnClassName}-group-rtl& {
+      border-radius: 0 @btn-border-radius-base @btn-border-radius-base 0;
+    }
+  }
+
+  > .@{btnClassName}:last-child:not(:first-child),
+  > span:last-child:not(:first-child) > .@{btnClassName} {
+    .@{btnClassName}-group-rtl& {
+      border-radius: @btn-border-radius-base 0 0 @btn-border-radius-base;
+    }
+  }
+
+  &-sm {
+    > .@{btnClassName}:first-child:not(:last-child),
+    > span:first-child:not(:last-child) > .@{btnClassName} {
+      .@{btnClassName}-group-rtl& {
+        border-radius: 0 @btn-border-radius-sm @btn-border-radius-sm 0;
+      }
+    }
+
+    > .@{btnClassName}:last-child:not(:first-child),
+    > span:last-child:not(:first-child) > .@{btnClassName} {
+      .@{btnClassName}-group-rtl& {
+        border-radius: @btn-border-radius-sm 0 0 @btn-border-radius-sm;
+      }
+    }
+  }
+}
